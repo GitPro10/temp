@@ -1,1 +1,210 @@
-# t
+# Eshop Scraper (eshop-scraper)
+
+**Eshop Scraper is a npm package.**
+
+```console
+npm i eshop-scraper
+```
+
+## What it does (in short)
+
+This package can be used for getting some important data like **price, currency, name** from various famous websites like **Amazon, Steam, Walmart etc.**
+
+## Support
+```json
+{
+  "node": ">=16.16.0",
+  "npm": ">=8.11.0"
+}
+```
+
+## Getting Started
+
+### Create a instance of eshop-scraper class
+
+```js
+import eshop_scraper from 'eshop-scraper'
+const scraper = new eshop_scraper()
+```
+### Use `.getData()` method of the class to scrape
+```js
+import eshop_scraper from 'eshop-scraper'
+const scraper = new eshop_scraper()
+
+(async () => {
+
+  let res = await scraper.getData("https://www.test.com/product/355223235")
+
+  console.log(res)
+
+})
+```
+
+## .getData()
+The method is used to scrape an website data thats entry is available in `_webprops`.
+
+### Parameter
+The method takes only one single parameter.<br/>
+Pass the link of the item you want to scrape inside the function.
+
+```js
+scraper.getData(link)
+```
+
+### Output
+It will will output a promise. Use *async/await* to handle the output.<br/>
+
+Sample output:
+
+```js
+{
+  price: 140.36,
+  currency: 'USD',
+  name: 'Test Item',
+  site: 'Test',
+  link: 'https://www.test.com/product/355223235'
+}
+```
+
+## Config
+Pass new configs inside the class to config some extra things. It's optional because some common entries already included in the scraper to use without any problem.
+
+### Insert new etries
+You can insert new entries in the scraper, then you can scrape items from that website just like default entries.
+
+```js
+import eshop_scraper from 'eshop-scraper'
+
+// create a map with new entries
+const propsList = new Map([
+  [
+    'test.com', {   // website's domain or subdomain
+    site: "Test",   // website's name
+    selector: {
+      price: ['span[itemprop="price"]'],    // items's price html selector
+      name: ['h1[itemprop="name"]']   // items's name html selector
+    }}
+  ],
+  // follow the same structure and add many more sites, inside the map
+])
+
+const config = {
+  webprops: propsList   // pass a map with new entries in webprops
+}
+
+const scraper = new eshop_scraper(config)
+```
+### Set timeout
+If the request takes longer time than this and the website doesn't response wthin that time then the request will be cancelled
+```js
+import eshop_scraper from 'eshop-scraper'
+
+const config = {
+  timeout: 10   // pass an integer in timeout (counted as second)
+}
+
+const scraper = new eshop_scraper(config)
+```
+### Replace or exclude extra things
+Exclude extra things to make the scraper work. The scraper needs to get a string like "\$50.30" or "USD 40" or "30 \$" from the price selector
+
+```js
+import eshop_scraper from 'eshop-scraper'
+
+const obj = {
+  'price is:' : '',   // pass empty string to exclude
+  'now' : '',
+  'usd' : '$'   // replace one string with another
+}
+
+const config = {
+  replaceobj: obj   // pass an object in replaceobj
+}
+
+const scraper = new eshop_scraper(config)
+```
+
+### Insert new currencies
+Some websites may show prices in bitcoin or some unknown  currency, to show them in proper way you need to map them. Otherwise you will get `undefined` in `currency` output.
+```js
+import eshop_scraper from 'eshop-scraper'
+
+// create a map with new entries
+const currencyList = new Map([
+  [
+    '$', 'USD',
+    ['euro', '€'], 'EUR'   // to map multiple strings to one currency put the strings inside an array
+  ],
+  // follow the same structure and add many more currencies, inside the map
+])
+
+const config = {
+  currencymap: currencyList   // pass a map with new currency entries in currencymap
+
+const scraper = new eshop_scraper(config)
+```
+### insert new set of headers
+To make scraper looks realistic and prevent the website from blocking the ip, realistic headers needed to be set.
+```js
+import eshop_scraper from 'eshop-scraper'
+
+const newheaders = [
+    {
+        Accept:
+            'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'User-Agent':
+            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36',
+    },
+    {
+        Accept:
+            'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'User-Agent':
+            'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:90.0) Gecko/20100101 Firefox/90.0',
+    },
+    // add many more headers inside the array
+]
+
+const config = {
+  headersarr: newheaders   // pass a arrray with new set of headers in headersarr
+
+const scraper = new eshop_scraper(config)
+```
+
+## Check default entries
+```js
+import eshop_scraper from 'eshop-scraper'
+const scraper = new eshop_scraper()
+
+(async () => {
+
+  let res = scraper._webprops
+
+  console.log(res)
+
+})
+```
+## Supported websites
+
+It supports **12** websites by default and more can be added very easily.
+
+### List:
+
+1. Steam (store.steampowered.com)
+2. Amazon (amazon.com, amazon.in)
+3. Walmart (walmart.com)
+4. Crutchfield (crutchfield.com)
+5. Playstation (store.playstation.com, gear.playstation.com, direct.playstation.com)
+6. Rakuten (fr.shopping.rakuten.com)
+7. Ebay (ebay.com)
+8. Ebags (ebags.com)
+9. Bikroy (bikroy.com)
+10. Flipkart (flipkart.com)
+11. Etsy (etsy.com)
+12. Avito (avito.ru)
+
+
+## Contribute
+Contribute in the project by opening a pull request on github. Contributions are welcomed!
+
+
+**<p align="center">Proudly Made In Bangladesh 🇧🇩</p>**
