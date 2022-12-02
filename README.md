@@ -144,7 +144,7 @@ const config = {
 
 const scraper = new eshop_scraper(config)
 ```
-### insert new set of headers
+### Insert new set of headers
 To make scraper looks realistic and prevent the website from blocking the ip, realistic headers needed to be set.
 ```js
 import eshop_scraper from 'eshop-scraper'
