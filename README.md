@@ -8,7 +8,7 @@ npm i eshop-scraper
 
 ## What it does (in short)
 
-This package can be used for getting some important data like **price, currency, name** from various famous websites like **Amazon, Steam, Walmart etc.**
+This package can be used for getting some important data like **price, currency, name** from various famous  e-commerce websites like **Amazon, Steam, Walmart etc.**
 
 ## Support
 ```json
@@ -41,7 +41,7 @@ const scraper = new eshop_scraper()
 ```
 
 ## .getData()
-The method is used to scrape an website data thats entry is available in `_webprops`.
+The method is used to scrape an website data that's entry is available in `_webprops`.
 
 ### Parameter
 The method takes only one single parameter.<br/>
@@ -69,7 +69,7 @@ Sample output:
 ## Config
 Pass new configs inside the class to config some extra things. It's optional because some common entries already included in the scraper to use without any problem.
 
-### Insert new etries
+### Insert new entries
 You can insert new entries in the scraper, then you can scrape items from that website just like default entries.
 
 ```js
@@ -140,6 +140,7 @@ const currencyList = new Map([
 
 const config = {
   currencymap: currencyList   // pass a map with new currency entries in currencymap
+}
 
 const scraper = new eshop_scraper(config)
 ```
@@ -166,20 +167,29 @@ const newheaders = [
 
 const config = {
   headersarr: newheaders   // pass a arrray with new set of headers in headersarr
+}
 
 const scraper = new eshop_scraper(config)
 ```
-
-## Check default entries
+## Check default values
+Use these only to check default valuess, directly replacing values with new values not recommended.
 ```js
 import eshop_scraper from 'eshop-scraper'
 const scraper = new eshop_scraper()
 
 (async () => {
 
-  let res = scraper._webprops
+  let defProps = scraper._webprops    // default supported websites
+  let defReplaceStrings = scraper._replaceobj   // default replaced strings
+  let defHeaders = scraper._headers   // default set of headers
+  let defTimeout = scraper._timeoutAmount   // default timeout amount
+  let defCurrencyMap = scraper._currencymap   // default currency map
 
-  console.log(res)
+  console.log(defProps)
+  console.log(defReplaceStrings)
+  console.log(defHeaders)
+  console.log(defTimeout)
+  console.log(defCurrencyMap)
 
 })
 ```
@@ -187,7 +197,7 @@ const scraper = new eshop_scraper()
 
 It supports **12** websites by default and more can be added very easily.
 
-### List:
+### List
 
 1. Steam (store.steampowered.com)
 2. Amazon (amazon.com, amazon.in)
