@@ -94,17 +94,6 @@ const config = {
 
 const scraper = new eshop_scraper(config)
 ```
-### Set timeout
-If the request takes longer time than this and the website doesn't response wthin that time then the request will be cancelled
-```js
-import eshop_scraper from 'eshop-scraper'
-
-const config = {
-  timeout: 10   // pass an integer in timeout (counted as second)
-}
-
-const scraper = new eshop_scraper(config)
-```
 ### Replace or exclude extra things
 Exclude extra things to make the scraper work. The scraper needs to get a string like "\$50.30" or "USD 40" or "30 \$" from the price selector
 
@@ -171,6 +160,17 @@ const config = {
 
 const scraper = new eshop_scraper(config)
 ```
+### Set timeout
+If the request takes longer time than this and the website doesn't response wthin that time then the request will be cancelled
+```js
+import eshop_scraper from 'eshop-scraper'
+
+const config = {
+  timeout: 10   // pass an integer in timeout (counted as second)
+}
+
+const scraper = new eshop_scraper(config)
+```
 ## Check default values
 Use these only to check default valuess, directly replacing values with new values not recommended.
 ```js
@@ -197,7 +197,7 @@ const scraper = new eshop_scraper()
 
 It supports **12** websites by default and more can be added very easily.
 
-### List
+### Websites list
 
 1. Steam (store.steampowered.com)
 2. Amazon (amazon.com, amazon.in)
