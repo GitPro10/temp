@@ -67,7 +67,7 @@ Sample output:
 ```
 
 ## Config
-Pass new configs inside the class to config some extra things. It's optional because some common entries already included in the scraper to use without any problem.
+Pass new configs inside the class to config some extra things. It's optional because some common configs already included in the scraper to use without any problem.
 
 ### Insert new entries
 You can insert new entries in the scraper, then you can scrape items from that website just like default entries.
@@ -95,7 +95,7 @@ const config = {
 const scraper = new eshop_scraper(config)
 ```
 ### Replace or exclude extra things
-Exclude extra things to make the scraper work. The scraper needs to get a string like "\$50.30" or "USD 40" or "30 \$" from the price selector
+Exclude extra things to make the scraper work. The scraper needs to get a string like "\$50.30" or "USD 40" or "30 \$" from the price selector.
 
 ```js
 import eshop_scraper from 'eshop-scraper'
@@ -118,7 +118,7 @@ Some websites may show prices in bitcoin or some unknown  currency, to show them
 ```js
 import eshop_scraper from 'eshop-scraper'
 
-// create a map with new entries
+// create a map with new currencies
 const currencyList = new Map([
   [
     '$', 'USD',
@@ -161,7 +161,7 @@ const config = {
 const scraper = new eshop_scraper(config)
 ```
 ### Set timeout
-If the request takes longer time than this and the website doesn't response wthin that time then the request will be cancelled
+If the request takes longer time than the set amount of time and the website doesn't response within that time then the request will be cancelled.
 ```js
 import eshop_scraper from 'eshop-scraper'
 
@@ -212,6 +212,15 @@ It supports **12** websites by default and more can be added very easily.
 11. Etsy (etsy.com)
 12. Avito (avito.ru)
 
+
+## Note
+Some websites may show unexpected result. Because all websites doesn't support the same way of scraping. Also this scraper is made for static websites. Dynamic / Single Page websites won't work with this scraper. Those will be supported in future version of this scraper.
+<br/>
+
+Some websites may show prices like "2345" instead of "23.45" because those websites initially shows the price without any dot or shows with a comma and later dynamically changed with a dot, as comma is excluded by the scraper and the scraper can't execute javascript while scraping, that's why the price is shown as "2345".
+<br/>
+
+Some websites shows price in local language. The scraper processes the price that's got from the website and it only understands English. So the price has to be in English. Otherwise it will return `NaN` in price output and `undefined` in currency output.
 
 ## Contribute
 Contribute in the project by opening a pull request on github. Contributions are welcomed!
